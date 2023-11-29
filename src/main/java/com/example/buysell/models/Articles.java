@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -27,20 +28,18 @@ public class Articles {
     @Column(name = "content", columnDefinition = "text")
     private String content;
 
+    // Используйте LocalDate или Date вместо String для даты
     @Column(name = "publicationDate")
-    private String publicationDate;
+    private LocalDate publicationDate; // или private Date publicationDate;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @ManyToMany
-    @JoinTable(
-            name = "article_categories",
-            joinColumns = @JoinColumn(name = "article_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private Set<Categories> categories;
+    // Изменено на @ManyToOne
+    @ManyToOne
+    @JoinColumn(name = "category_id") // Внимание: имя поля в таблице должно совпадать с ERD
+    private Categories category; // Изменено на единственное число, так как теперь одна статья связана с одной категорией
 
     @ManyToOne
     @JoinColumn(name = "journal_issue_id")
@@ -48,5 +47,4 @@ public class Articles {
 
     @Column(name = "paymentAmount")
     private BigDecimal paymentAmount;
-
 }

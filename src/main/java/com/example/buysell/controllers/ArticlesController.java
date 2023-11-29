@@ -11,8 +11,12 @@ import java.util.List;
 @RequestMapping("/articles")
 public class ArticlesController {
 
+    private final ArticlesService articlesService;
+
     @Autowired
-    private ArticlesService articlesService;
+    public ArticlesController(ArticlesService articlesService) {
+        this.articlesService = articlesService;
+    }
 
     @GetMapping("/journalIssue/{journalIssueId}")
     public List<Articles> getArticlesByJournalIssue(@PathVariable Long journalIssueId) {
@@ -28,4 +32,6 @@ public class ArticlesController {
     public List<Articles> getArticlesByCategory(@PathVariable String categoryName) {
         return articlesService.getArticlesByCategory(categoryName);
     }
+
+    // Дополнительные методы, если они вам нужны...
 }

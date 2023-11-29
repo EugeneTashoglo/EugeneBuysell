@@ -21,7 +21,7 @@
         @Column(name = "name")
         private String name;
 
-        @ManyToMany(mappedBy = "categories")
-        private Set<Articles> articles;
-
+        // Обновлено для отражения обратной связи с Articles
+        @OneToMany(mappedBy = "category")
+        private Set<Articles> articles; // Статьи теперь связаны через поле 'category' в классе Articles
     }

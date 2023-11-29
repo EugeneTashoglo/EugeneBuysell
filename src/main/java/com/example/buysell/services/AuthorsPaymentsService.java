@@ -29,11 +29,16 @@ public class AuthorsPaymentsService {
     }
 
     public BigDecimal calculateTotalPaymentsByCategoryAndPeriod(String categoryName, Date startDate, Date endDate) {
-        List<AuthorsPayments> payments = authorsPaymentsRepository.findByAuthor_Articles_Categories_NameAndPaymentDateBetween(categoryName, startDate, endDate);
+        List<AuthorsPayments> payments = authorsPaymentsRepository.findByAuthor_Articles_Category_NameAndPaymentDateBetween(categoryName, startDate, endDate);
         return calculateTotalPayments(payments);
     }
 
-
+    public BigDecimal calculateTotalPaymentsByAuthor(Long authorId) {
+        List<AuthorsPayments> payments = authorsPaymentsRepository.findByAuthor_IdAuthor(authorId);
+        return payments.stream()
+                .map(AuthorsPayments::getPaymentAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
     private BigDecimal calculateTotalPayments(List<AuthorsPayments> payments) {
         return payments.stream()
                 .map(AuthorsPayments::getPaymentAmount)

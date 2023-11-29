@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface AuthorsPaymentsRepository extends JpaRepository<AuthorsPayments, Long> {
 
-    List<AuthorsPayments> findByAuthor_Articles_Categories_NameAndPaymentDateBetween(String categoryName, Date startDate, Date endDate);
+    List<AuthorsPayments> findByAuthor_Articles_Category_NameAndPaymentDateBetween(String categoryName, Date startDate, Date endDate);
+
 
     List<AuthorsPayments> findByArticle_JournalIssue_IdJournalIssue(Long journalIssueId);
 

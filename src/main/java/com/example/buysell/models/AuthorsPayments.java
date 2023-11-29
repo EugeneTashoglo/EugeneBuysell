@@ -29,5 +29,8 @@ public class AuthorsPayments {
     @JoinColumn(name = "author_id")
     private Author author;
 
-
+    // Добавляем связь с Articles
+    @ManyToOne
+    @JoinColumn(name = "article_id")
+    private Articles article;
 }

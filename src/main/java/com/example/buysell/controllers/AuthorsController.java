@@ -12,12 +12,20 @@ import java.util.List;
 @RequestMapping("/authors")
 public class AuthorsController {
 
+    private final AuthorsService authorsService;
+
     @Autowired
-    private AuthorsService authorService;
+    public AuthorsController(AuthorsService authorsService) {
+        this.authorsService = authorsService;
+    }
 
     @GetMapping("/")
     public List<Author> getAllAuthors() {
-        return authorService.getAllAuthors();
+        return authorsService.getAllAuthors();
     }
 
+    @GetMapping("/{authorId}")
+    public Author getAuthorById(@PathVariable Long authorId) {
+        return authorsService.getAuthorById(authorId);
+    }
 }

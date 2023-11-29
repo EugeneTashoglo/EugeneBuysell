@@ -7,11 +7,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/categories")
 public class CategoriesController {
 
-    @Autowired
-    private CategoriesService categoriesService;
+    private final CategoriesService categoriesService;
 
+    @Autowired
+    public CategoriesController(CategoriesService categoriesService) {
+        this.categoriesService = categoriesService;
+    }
+
+    @GetMapping("/")
+    public List<Categories> getAllCategories() {
+        return categoriesService.getAllCategories();
+    }
 }

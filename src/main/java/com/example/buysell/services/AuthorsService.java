@@ -16,32 +16,20 @@ import java.util.stream.Collectors;
 @Service
 public class AuthorsService {
 
+    private final AuthorRepository authorRepository;
+
     @Autowired
-    private AuthorRepository authorRepository;
-    public interface AuthorRepository extends JpaRepository<Author, Long> {
-        List<Articles> findArticlesByAuthorId(Long authorId);
+    public AuthorsService(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
     }
 
-
-    @Autowired
-    private AuthorsPaymentsService authorsPaymentsService;
     public List<Author> getAllAuthors() {
         return authorRepository.findAll();
     }
-
-    public List<Articles> getArticlesAndPaymentsByAuthor(Long authorId) {
-        Author author = authorRepository.findById(authorId).orElse(null);
-        if (author != null) {
-            List<AuthorsPayments> payments = authorsPaymentsService.getPaymentsByAuthor(authorId);
-
-            return payments.stream()
-                    .map(payment -> {
-                        Articles article = new Articles();
-                        article.setPaymentAmount(payment.getPaymentAmount());
-                        return article;
-                    })
-                    .collect(Collectors.toList());
-        }
-        return Collections.emptyList();
+    public Author getAuthorById(Long authorId) {
+        return authorRepository.findById(authorId).orElse(null);
+    }
+    public Author getAuthorDetails(Long id) {
+        return authorRepository.findById(id).orElse(null); // Возвращаем автора или null, если автор не найден
     }
 }

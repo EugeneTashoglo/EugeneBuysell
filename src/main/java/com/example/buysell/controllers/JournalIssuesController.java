@@ -11,7 +11,15 @@ import java.util.List;
 @RequestMapping("/journal-issues")
 public class JournalIssuesController {
 
-    @Autowired
-    private JournalIssuesService journalIssuesService;
+    private final JournalIssuesService journalIssuesService;
 
+    @Autowired
+    public JournalIssuesController(JournalIssuesService journalIssuesService) {
+        this.journalIssuesService = journalIssuesService;
+    }
+
+    @GetMapping("/")
+    public List<JournalIssues> getAllJournalIssues() {
+        return journalIssuesService.getAllJournalIssues();
+    }
 }
